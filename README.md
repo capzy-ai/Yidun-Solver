@@ -139,6 +139,17 @@ When the task is ready (`status: "ready"`), `solution` contains:
 |-------|------|-------|
 | `validate` | `string` | The Yidun validation token. Submit to the site's backend for server-side verification. |
 
+### Example
+
+```json
+{
+  "status": "ready",
+  "solution": {
+    "validate": "<long Yidun validate token, single-use>"
+  }
+}
+```
+
 ### How to use the result
 
 Submit the `validate` token to the target site's backend in whatever field its API expects.
