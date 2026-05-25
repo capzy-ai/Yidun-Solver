@@ -17,10 +17,16 @@ API_BASE="${API_BASE:-https://api.capzy.ai}"
 : "${CAPZY_KEY:?set CAPZY_KEY in your env (grab one at https://capzy.ai/auth/register)}"
 
 # Customize the task body to match the target site you're solving.
+# - websiteKey: the Yidun captchaId passed to initNECaptcha({captchaId: ...})
+#   on the target page. Extract per-render — don't cache.
+# - userAgent: the token Yidun issues is bound to this UA; replay the SAME
+#   UA when you submit the token.
 TASK=$(cat <<'JSON'
 {
-    "type": "YidunSliderTaskProxyLess",
-    "websiteURL": "https://dun.163.com/trial/sense"
+    "type":       "YidunSliderTaskProxyLess",
+    "websiteURL": "https://dun.163.com/trial/jigsaw",
+    "websiteKey": "5a0e2d04ffa44caba3f740e6a8b0fa84",
+    "userAgent":  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 }
 JSON
 )

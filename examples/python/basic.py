@@ -29,8 +29,16 @@ def solve() -> dict:
         json={
             "clientKey": CAPZY_KEY,
             "task": {
-                "type": "YidunSliderTaskProxyLess",
-                "websiteURL": "https://dun.163.com/trial/sense"
+                "type":       "YidunSliderTaskProxyLess",
+                "websiteURL": "https://dun.163.com/trial/jigsaw",
+                # The Yidun captchaId is passed to initNECaptcha({captchaId: ...})
+                # on the target page. Extract per-render — don't cache.
+                "websiteKey": "5a0e2d04ffa44caba3f740e6a8b0fa84",
+                # Recent desktop Chrome UA. The issued token is bound to this
+                # UA, so replay the SAME UA when you submit the token.
+                "userAgent":  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                              "AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/131.0.0.0 Safari/537.36",
             },
         },
         timeout=15,
@@ -68,4 +76,9 @@ if __name__ == "__main__":
     solution = solve()
     print("solution:", solution)
     # ─── How to use the result ────────────────────────────────────
-    # Submit the `validate` token to the target site's backend in whatever field its API expects.
+    # Submit `solution["token"]` to the target site's backend (usually
+    # in the field named `NECaptchaValidate`). Pair it with the exact
+    # `solution["userAgent"]` value as the User-Agent header — Yidun's
+    # server-side check rejects on UA mismatch.
+    # `solution["validate"]` is a legacy alias for `solution["token"]`
+    # (same string) for clients integrated against the older shape.
